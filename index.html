@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>jQuery Template Plugin</title>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+
+
+
+<p>Load more comments, (append example)</p>
+
+<ul id="comments"></ul>
+
+<button id="load-more">Load more</button>
+
+
+
+<hr/>
+
+
+
+<p>Poll, (replace example)</p>
+
+<ul id="poll">
+    <li>
+        <input type="radio" name="option"/>
+        <span>Option 1</span>
+    </li>
+    <li>
+        <input type="radio" name="option"/>
+        <span>Option 2</span>
+    </li>
+    <li>
+        <input type="radio" name="option"/>
+        <span>Option 3</span>
+    </li>
+</ul>
+
+<button id="poll-results-button">View results</button>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!--<script src="js/jquery-1.9.1.js"></script>-->
+<script src="js/jquery.template.js"></script>
+<script>
+
+    /**
+     * EVENT: When the user has clicked the load more button for the comments
+     */
+    $(document).on('click', '#load-more', function() {
+
+        // Load the template for #comments
+        $('#comments').template({
+            template: 'templates/comment.html',
+            file: 'php/comments.php',
+            action: 'append',
+            data: { "key": 'value' },
+            mobile: true,
+            before: function() {
+                console.log('Add Throbber');
+            },
+            after: function() {
+                console.log('Remove Throbber');
+            }
+        });
+    });
+
+    /**
+     * EVENT: When the user has chosen an option in the poll
+     */
+    $(document).on('click', '#poll-results-button', function() {
+
+        var $this = $(this);
+
+        // Load the template for #poll
+        $('#poll').template({
+            template: 'templates/poll.html',
+            file: 'php/poll.php',
+            action: 'replace',
+            effect: 'fadeIn',
+            before: function() {
+                $this.hide();
+                console.log('Add Throbber');
+            },
+            after: function() {
+                console.log('Remove Throbber');
+            }
+        });
+    });
+
+</script>
+</body>
+
+</html>
